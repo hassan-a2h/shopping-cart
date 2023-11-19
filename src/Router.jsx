@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
 
 const Router = () => {
   const routes = [
     {
       path: "/",
-      element: "./components/LandingPage.jsx",
+      element: <LandingPage />,
     }
   ];
 
