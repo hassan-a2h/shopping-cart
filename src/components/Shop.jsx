@@ -1,28 +1,47 @@
 import { useState, useEffect } from 'react';
 import Nav from './Navbar';
 import Product from './Product';
+import ProductList from './ProductList';
+import '../assets/styles.css';
 
-const Shop = ({ category }) => {
-  let [products, setProducts] = useState(null);
+const Shop = ({ currentProduct, category }) => {
+  const [product, setProduct] = useState(currentProduct);
+  const [products, setProducts] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/category/jewelery`, 
-      { mode: 'cors' })
-    .then(response => { 
-      if (!response.ok) {
-        throw new Error("Error, couldn't load data");
+    const fetchData = async () => {
+      try {
+        let data = await fetch(`https://fakestoreapi.com/products/category/jewelery?limit=20`, 
+        { mode: 'cors' });
+  
+        if (!data.ok) {
+          throw new Error("Network error");
+        }
+  
+        data = await data.json();
+        setProducts(data);
+        setLoading(false);
+        setProduct(data[0])
+        console.log(product);
       }
-      return response.json();
-    })
-    .then(response => setProducts(response))
-    .catch(error => console.log(error));
+      catch(error) {
+        console.log(error);
+        setError(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
-    <>
-      <Nav leftItems={['Home']} rightItems={['Checkout']}/>
-      {products && products.map(product => <Product product={product}/>)}
-    </>
+    <div className="shop">
+      { loading && <p className="product">Loading...</p> }
+      { error && <h3 className="product">Error: {error}</h3> }
+      { product && <Product product={product} className="product"/> }
+      { products && <ProductList products={products} current={product} /> }
+    </div>
   );
 };
 

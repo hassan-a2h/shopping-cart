@@ -1,16 +1,21 @@
 const Product = ({ product }) => {
+  const addToCart = (id, category) => {
+    cart.push([id, category]);
+  };
+
   return (
-    <div>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <img src="" alt="Picture of Product" />
-      <p>{product.rating} / 5</p>
-      <ul>
-        {product.categories.map((category) => {
-          return <li><h5>{category.name}</h5></li>
-        })}
-      </ul>
-    </div>
+    <>
+      {
+        product &&
+        <div key={product.id}>
+          <h1>{product.title}</h1>
+          <p>{product.description}</p>
+          <img src={product.image} alt="Picture of Product" />
+          <p>{product.rating.rate} / 5</p>
+          <button onClick={() => addToCart(product.id, product.category)}>Add to Cart</button>
+        </div>
+      }
+    </>
   );
 };
 
