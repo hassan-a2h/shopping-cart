@@ -1,0 +1,41 @@
+* {
+  overflow: hidden;
+}
+
+.shop {
+  height: auto;
+  width: 100%;
+  padding: 0 100px;
+  display: grid;
+  gap: 4rem;
+  grid-template-rows: 1fr;
+  grid-template-columns: 3fr 1fr 1fr;
+}
+
+.product {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.product-name {
+  height: 4rem;
+  width: 4rem;
+  background-color: silver;
+  color: black;
+  border-radius: 4px;
+}
+
+.product-name-selected {
+  background-color: grey;
+  color: black;
+}
